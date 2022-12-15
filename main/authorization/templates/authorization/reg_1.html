@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'authorization/css/normalize.css' %}">
+    <title>U Summer School</title>
+    <link rel="stylesheet" href="https://unpkg.com/accordion-js@3.3.2/dist/accordion.min.css">
+    <link rel="stylesheet" href="{% static 'authorization/css/reg_1.css' %}">
+
+</head>
+<body>
+    <header class="header">
+        <div class="">
+            <div class="container__blue header__card">
+                <div class="header__menu flex">
+                    <a href="{% url 'home' %}" class="header__link-logo">
+                        <img src="{% static 'authorization/img/header__logo.svg' %}" alt="Logo" class="header__logo" >
+                    </a>
+                    <div class="header__position-home">
+                        <a href="{% url 'home' %}" class="header__link-home">
+                            Главная страница
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <section class="registration web-adaptive">
+            <div class="container__white">
+                <div class="flex">
+                    <h2 class="registration__title">
+                        Регистрация
+                    </h2>
+                </div>
+                <div class="web-adaptive">
+                    <ul class="list-reset registration__list-form flex">
+                        <li class="test">
+                            <div class="flex registration__img-group">
+                                <p class="registration__stage registration__img-box">
+                                    1
+                                </p>
+                                <svg class="registration__img-line" width="362" height="9" viewBox="0 0 362 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="362" height="9" fill="#3F43C5"/>
+                                </svg>
+                            </div>
+                        </li>
+                        <li class="test">
+                            <div class="flex registration__img-group">
+                                <svg class="registration__img-box" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="36" height="36" fill="#EF476F"/>
+                                    </svg>
+
+                                <svg class="registration__img-line" width="362" height="9" viewBox="0 0 362 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="362" height="9" fill="#3F43C5"/>
+                                    </svg>
+                            </div>
+                        </li>
+                        <li class="test">
+                            <div class="flex registration__img-group">
+                                <svg class="registration__img-box" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect width="36" height="36" fill="#EF476F"/>
+                                    </svg>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <ul class="list-reset registration__list">
+                        {{ wizard.management_form }}
+
+                        {% for field in wizard.form %}
+                        <li class="registration__items flex web-adaptive">
+                            <label class="registration__text" for="{{field.id_for_label}}">{{field.label}}</label>
+                            <div class="registration__input-remark">
+                                {% if field.name == 'Пароль' or field.name == 'Повторите пароль' %}
+                                <input class="registration__input" name="first-{{ field.name }}" type="password" id="{{ field.id_for_label }}">
+                                {% else %}
+                                <input class="registration__input" name="first-{{ field.name }}" type="text" id="{{ field.id_for_label }}">
+                                {% endif %}
+                                {% if field.name == 'Логин' %}
+                                <p class="registration__remark">
+                                </p>
+                                {% else %}
+                                <p class="registration__remark"></p>
+                                {% endif %}
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="test">
+                        {% if wizard.steps.prev %}
+                        <button class="registration__button" name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">Назад</button>
+                        {% endif %}
+                        <button class="registration__button" type="submit" value="Вперед">Вперед</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</body>
+</html>

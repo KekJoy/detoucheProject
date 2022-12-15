@@ -1,0 +1,27 @@
+{% extends 'registration/reg_2.html' %}
+{% load i18n %}
+
+<div>
+    {% block content %}
+        <p>Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+        <form action="" method="post">
+            {% csrf_token %}
+            <table class="registration__list registration__items registration__text">
+                {{ wizard.management_form }}
+                {% if wizard.form.forms %}
+                    {{ wizard.form.management_form }}
+                    {% for form in wizard.form.forms %}
+                        {{ form.as_table }} lsdfgkjls
+                    {% endfor %}
+                {% else %}
+                    {{ wizard.form }}
+                {% endif %}
+            </table>
+            {% if wizard.steps.prev %}
+                <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.first }}">First Step</button>
+                <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">Prev. Step</button>
+            {% endif %}
+            <input type="submit" value="{% trans 'submit' %}"/>
+        </form>
+    {% endblock %}
+</div>
